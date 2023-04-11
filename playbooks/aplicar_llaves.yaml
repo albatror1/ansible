@@ -1,0 +1,11 @@
+---
+- name: Aplicacion de las ssh ssh_keys via role playbook
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - debug:
+        msg: 'Copiando Llaves.'
+
+  roles:
+    - ssh_keys

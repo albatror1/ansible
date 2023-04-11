@@ -1,0 +1,13 @@
+---
+- name: PATCHIN via role playbook
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - debug:
+        msg: 'Comenzando patching.'
+
+  roles:
+    - repositorios_oci
+    - paquetes_minimios
+    - update

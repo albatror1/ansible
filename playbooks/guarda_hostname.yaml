@@ -1,0 +1,15 @@
+---
+- name: Aplicacion de las ssh ssh_keys via role playbook
+  hosts: all
+  become: true
+
+  tasks:
+
+
+  - debug: var=ansible_all_ipv4_addresses
+  - debug: var=ansible_default_ipv4.address  
+  - debug: var="{{item}}"
+    with_items:
+##        - ip1
+      - ansible_default_ipv4.address 
+#        - ip3

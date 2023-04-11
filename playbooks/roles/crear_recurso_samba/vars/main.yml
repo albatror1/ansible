@@ -1,0 +1,96 @@
+---
+# vars file for crear_recurso_samba
+shares:
+  - share: "RG_PRD_TEST1"
+    path: "/shares/groups/"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    force_create_mode : 0777
+    force_directory_mode : 4777
+    force_user : nobody
+    force:group : "DTVPAN+domain users"
+    write_list : "@DTVPAN+SMB_PE_PRD_SGI_IVA_VTAS_RW"
+    read_list : "@DTVPAN+SMB_PE_PRD_SGI_IVA_VTAS_RO"
+  - share: "RG_PRD_VERINT"
+    path: "/shares/groups/"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    force_create_mode : 0777
+    force_directory_mode : 4777
+    force_user : nobody
+    force:group : "DTVPAN+domain users"
+    write_list : "@DTVPAN+SMB_RG_PRD_VERINT_RW"
+    read_list : "@DTVPAN+SMB_RG_PRD_VERINT_RO"
+  - share: "RG_PRD_BIAPPS"
+    path: "/shares/groups/"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    force_create_mode : 0777
+    force_directory_mode : 4777
+    force_user : nobody
+    force:group : "DTVPAN+domain users"
+    write_list : "@DTVPAN+SMB_RG_PRD_BIAPPS_RW"
+    read_list : "@DTVPAN+SMB_RG_PRD_BIAPPS_RO"
+  - share: "RG_PRD_SASFS"
+    path: "/shares/groups/"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    force_create_mode : 0777
+    force_directory_mode : 4777
+    force_user : nobody
+    force:group : "DTVPAN+domain users"
+    write_list : "@DTVPAN+SMB_RG_PRD_SASFS_RW"
+    read_list : "@DTVPAN+SMB_RG_PRD_SASFS_RO"
+  - share: "RG_PRD_BKPRESTORE"
+    path: "/shares/groups/"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    force_create_mode : 0777
+    force_directory_mode : 4777
+    force_user : nobody
+    force:group : "DTVPAN+domain users"
+    write_list : "@DTVPAN+SMB_RG_PRD_BKPRESTORE_RW"
+    read_list : "@DTVPAN+SMB_RG_PRD_BKPRESTORE_RO"
+  - share: "RG_PRD_BIFS"
+    path: "/shares/groups/"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    force_create_mode : 0777
+    force_directory_mode : 4777
+    force_user : nobody
+    force:group : "DTVPAN+domain users"
+    write_list : "@DTVPAN+SMB_RG_RG_PRD_BIFS_RW"
+    read_list : "@DTVPAN+SMB_RG_RG_PRD_BIFS_RO"
+  - share: "RG_PRD_MIDASOFT"
+    public : no
+    browseable : yes
+    read_only : no
+    guest_ok : no
+    create_mask : 0777
+    directory_mask : 4777
+    write_list : "@DTVPAN+SMB_RG_PRD_MIDASOFT_RW"
+    read_list : "@DTVPAN+SMB_RG_PRD_MIDASOFT_RO"

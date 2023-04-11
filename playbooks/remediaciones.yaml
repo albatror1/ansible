@@ -1,0 +1,11 @@
+---
+- name: Aplica Remediaciones
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - debug:
+        msg: 'Aplica Remediaciones'
+
+  roles:
+    - history

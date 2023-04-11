@@ -1,0 +1,117 @@
+---
+- name: System details
+  debug:
+    msg: '{{ item }}'
+  with_items: 
+  - '{{ ansible_distribution }}'
+  - '{{ ansible_distribution_version }}'
+  - '{{ ansible_distribution_major_version }}'
+  - name: Print all available facts
+    debug:
+      var: ansible_facts
+
+- name: Busca repositorios viejos
+  find:
+    paths: /etc/yum.repos.d/
+    recurse: false
+    patterns: '*.repo,*.REPO'
+  register: result
+
+- name: Eliminando Repositorios Viejos
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ result.files }}"      
+
+- name: Elimina configuracion de proxy en YUM
+  ansible.builtin.lineinfile:
+    path: /etc/yum.conf
+    regexp: '^proxy='
+    backup: yes
+    state: absent
+
+- name : Actualizar Oracle 7
+  block :  
+  - name: Repo Completo (1/4)
+    yum_repository:
+      name: '{{ item.nombre }}'
+      description: '{{ item.description }}'
+      file: dtv-ol7
+      baseurl: '{{ item.baseurl }}'
+      gpgcheck: no
+    with_items: "{{ repos_ol_7 }}"
+  - name: Print all available facts
+    debug:
+      var: ansible_facts
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
+
+- name : Actualizar Oracle 8
+  block :  
+  - name: Repo Completo (1/4)
+    yum_repository:
+      name: '{{ item.nombre }}'
+      description: '{{ item.description }}'
+      file: dtv-ol8
+      baseurl: '{{ item.baseurl }}'
+      gpgcheck: no
+    with_items: "{{ repos_ol_8 }}"
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "8"
+
+- name : Actualizar Oracle 9
+  block :  
+  - name: Repo Completo (1/4)
+    yum_repository:
+      name: '{{ item.nombre }}'
+      description: '{{ item.description }}'
+      file: dtv-ol8
+      baseurl: '{{ item.baseurl }}'
+      gpgcheck: no
+    with_items: "{{ repos_ol_9 }}"
+
+#      - name: Print all available facts
+#        debug:
+#          var: ansible_facts
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "9"
+
+
+
+- name : Actualizar RedHat 7.9
+  block :  
+  - name: Repo Completo (1/4)
+    yum_repository:
+      name: '{{ item.nombre }}'
+      description: '{{ item.description }}'
+      metadata_expire : "86400"
+      file: dtv-rh7
+      baseurl: '{{ item.baseurl }}'
+      gpgcheck: no
+    with_items: "{{ repos_rh_79 }}"
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "7"
+
+- name : Actualizar RedHat 8
+  block :  
+  - name: Repo Completo (1/4)
+    yum_repository:
+      name: '{{ item.nombre }}'
+      description: '{{ item.description }}'
+      metadata_expire : "86400"
+      file: dtv-rh8
+      baseurl: '{{ item.baseurl }}'
+      gpgcheck: no
+    with_items: "{{ repos_rh_8 }}"
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "8"
+
+- name : Actualizar OracleLinux 6
+  block :  
+
+  - name: Repo Completo (1/4)
+    yum_repository:
+      name: '{{ item.nombre }}'
+      description: '{{ item.description }}'
+      metadata_expire : "86400"
+      file: dtv-rh8
+      baseurl: '{{ item.baseurl }}'
+      gpgcheck: no
+    with_items: "{{ repos_ol_6 }}"
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "6"
+

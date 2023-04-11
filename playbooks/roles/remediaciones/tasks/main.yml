@@ -1,0 +1,115 @@
+---
+# tasks file for remediaciones
+
+- name: 5.6 Ensure access to the su command is restricted
+  lineinfile:
+      path: /etc/pam.d/su
+      line: 'auth           required        pam_wheel.so use_uid'
+      backup: yes
+- name : 6.1.10 Ensure no world writable files exist (1/2)
+  find:
+    paths: /home/
+    recurse: false
+    patterns: '*'
+  register: v_home
+- name : 6.1.10 Ensure no world writable files exist (2/2)
+  file:
+    path: "{{ item.path }}"
+    mode: '0700'
+  with_items: "{{ v_home.files }}"  
+
+- name : 6.2.7 Ensure all users' home directories exist (1/2)
+  shell: 
+    cmd : awk '$3 >= 1000 {print $6}' FS=":" /etc/passwd
+  register : v_usuarios
+- debug: "{{ v_usuarios.stdout }}"
+
+#
+#- getent:
+#    database: passwd
+#    key: "{{ item }}"
+#    fail_key: no
+#  register: x
+#  loop: "{{ v_usuarios }}"#
+
+#- debug: var=x.results
+
+
+
+
+
+
+
+
+
+#- name: get user home directory
+#  shell: >
+#    getent passwd | gawk -F: '$3 > 999 {print $1}'#
+
+#  changed_when: false
+#  register: user_name
+
+#- name: Get all account info
+#  getent:
+#    database: passwd
+#  register: v_usuarios
+#- debug:
+#    msg: '{{v_usuarios}}' 
+#    var: getent_passwd
+#- ansible.builtin.set_fact:
+#    uid: "{{ getent_passwd[username][1] }}"
+#    gid: "{{ getent_passwd[username][2] }}"
+#    home: "{{ getent_passwd[username][4] }}"
+#    shell: "{{ getent_passwd[username][5] }}"
+#- ansible.builtin.debug:
+#    msg: "UID: {{ uid }}, GID: {{ gid }}, home: {{ home }}, shell: {{ shell }}"
+
+
+
+
+
+
+
+#- debug: var=ansible_facts.getent_passwd
+
+#- name: "Lock user account(s)"
+#  user:
+#    name: "{{ item }}"
+##    password_lock: yes
+#    shell: /bin/bash
+##    expires: "{{ rightnow }}"
+#  with_items:
+#    - '{{ dis_user | lower }}'
+#  register: pwd_lock
+##  changed_when:
+##    - pwd_lock.rc == 0
+#  failed_when:
+#    - "'Password information unchanged' not in pwd_lock.stderr"
+#    - pwd_lock.rc != 0
+#  when: dis_user in ansible_facts.getent_passwd
+
+- name : 1.5.3 Ensure authentication required for single user mode (Scored) 1/2
+  lineinfile:
+      path: /usr/lib/systemd/system/rescue.service
+      regexp: '^ExecStart='
+      line: ExecStart=-/usr/lib/systemd/systemd-sulogin-shell rescue
+- name : 1.5.3 Ensure authentication required for single user mode (Scored) 2/2
+  lineinfile:
+      path: /usr/lib/systemd/system/emergency.service
+      regexp: '^ExecStart='
+      line: ExecStart=-/usr/lib/systemd/systemd-sulogin-shell emergency
+
+- name: 1.1.1.1 Ensure mounting of cramfs filesystems is disabled (Scored)
+  community.general.modprobe:
+    name: 
+      - cramfs
+      - squashfs
+      - udf
+    state: absent
+
+
+- name : 1.7.16
+  file:
+    path: /etc/issue.net
+    mode: '0644'
+

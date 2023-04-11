@@ -1,0 +1,21 @@
+---
+# tasks file for playbooks/roles/ssh_keys
+- name: Configurando las Key del usuario root
+  authorized_key:
+    user: root
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - files/opc_trst549.pub
+    - files/root_1.pub
+    - files/root_2.pub
+    - files/root_automation.pub
+    - files/root_rgocitrpr3058.pub
+- name: Configurando las Key del usuario opc
+  authorized_key:
+    user: opc
+    state: present
+    key: '{{ item }}'
+  with_file:
+    - files/root_automation.pub
+    

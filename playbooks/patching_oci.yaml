@@ -1,0 +1,26 @@
+---
+- name: PATCHIN via role playbook
+  hosts: all
+  become: true
+  serial: 5
+
+
+  pre_tasks:
+    - debug:
+        msg: 'Comenzando patching.'
+
+  roles:
+#    - firewall_selinux
+#    - conf_locales
+#    - history
+    - repositorios_oci
+    - paquetes_minimios
+
+  post_tasks:
+    - name: "Actualizar Paquetes"
+      yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+        exclude: kernel*
+        

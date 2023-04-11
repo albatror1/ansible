@@ -1,0 +1,91 @@
+---
+- name: System details
+  debug:
+    msg: '{{ item }}'
+  with_items: 
+  - '{{ ansible_distribution }}'
+  - '{{ ansible_distribution_version }}'
+  - '{{ ansible_distribution_major_version }}'
+
+- name : NTP OracleLinux 7
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - ntp
+      state: present
+- name: "Copia configuracion NTP"
+  template: 
+    src: files/ntp.conf
+    dest: /etc/ntp.conf 
+
+- name: Configurando TZ a Buenos Aires Argentina
+  ansible.builtin.shell: timedatectl set-timezone America/Argentina/Buenos_Aires
+
+- name: Iniciando NTP
+  systemd:
+    name: ntpd
+    state: started
+    enabled: true  
+
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
+
+
+
+- name : NTP Oracle 8
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - chrony
+      state: present
+
+- name: "Copia configuracion NTP"
+  template: 
+    src: files/chrony.conf
+    dest: /etc/chrony.conf 
+
+- name: Configurando TZ a Buenos Aires Argentina
+  ansible.builtin.shell: timedatectl set-timezone America/Argentina/Buenos_Aires
+
+- name: Iniciando chronyd
+  systemd:
+    name: chronyd.service
+    state: started
+    enabled: true  
+
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "8"
+
+
+
+- name : NTP RedHat 7.9
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - chrony
+      state: present
+
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "7"
+
+- name : NTP| RedHat 8
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - chrony
+      state: present
+
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "8"
+
+- name : NTP OracleLinux 6
+  block :  
+
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - ntp
+      state: present
+
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "6"
+

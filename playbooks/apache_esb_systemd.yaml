@@ -1,0 +1,23 @@
+---
+- hosts: all
+  tasks:
+  - name: Crea el archivo de servicio
+    copy: 
+      dest: /etc/systemd/system/apacheesb.service
+      content: |
+        [Unit]
+        Description=Daemon Apache ESB
+        After=network.target
+        [Service]
+        User=orawl
+        ExecStart=/etc/httpd/bin/apachectl -k start
+        ExecStop=/etc/httpd/bin/apachectl -k stop
+        [Install]
+        WantedBy=multi-user.target
+  - name: Reload Systemd
+    systemd:
+      daemon-reload: yes
+  - name: Enable apacheesb.service
+    systemd:
+      name: apacheesb.service
+      enabled: true

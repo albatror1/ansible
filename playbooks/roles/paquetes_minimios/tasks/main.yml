@@ -1,0 +1,124 @@
+---
+- name: System details
+  debug:
+    msg: '{{ item }}'
+  with_items: 
+  - '{{ ansible_distribution }}'
+  - '{{ ansible_distribution_version }}'
+  - '{{ ansible_distribution_major_version }}'
+
+
+- name : Actualizar Oracle 7
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - nmap
+        - sudo
+        - net-tools
+        - bind-utils
+        - vim
+#           - qemu-guest-agent
+#           - cloud-init
+#           - cloud-utils-growpart
+        - dmidecode 
+        - redhat-lsb-core 
+        - wget 
+        - expect 
+        - ntp 
+        - net-snmp 
+        - tcp_wrappers 
+        - cronie-anacron 
+        - lsof 
+        - screen 
+        - sg3_utils 
+        - rsync 
+        - mlocate
+        - gcc
+      state: present
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "7"
+
+
+
+- name : Actualizar Oracle 8
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - screen
+        - chrony
+        - nmap
+        - sudo
+        - net-tools
+        - bind-utils
+        - vim
+        - dmidecode 
+        - redhat-lsb-core 
+        - wget 
+        - expect 
+        - net-snmp 
+        - cronie-anacron 
+        - lsof 
+        - sg3_utils 
+        - nmap 
+        - rsync 
+        - mlocate
+        - gcc
+      state: present
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "8"
+
+
+
+- name : Actualizar RedHat 7.9
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - chrony
+        - nmap
+        - sudo
+        - net-tools
+        - bind-utils
+        - vim
+        - NetworkManager-cloud-setup
+        - langpacks-en
+        - glibc-all-langpacks
+      state: present
+
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "7"
+
+- name : Actualizar RedHat 8
+  block :  
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - chrony
+        - nmap
+        - sudo
+        - net-tools
+        - bind-utils
+        - vim
+        - NetworkManager-cloud-setup
+        - langpacks-en
+        - glibc-all-langpacks
+      state: present
+
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == "8"
+
+- name : Actualizar OracleLinux 6
+  block :  
+
+  - name: "instalar paquetes con Yum"
+    yum:
+      name:
+        - nmap
+        - sudo
+        - net-tools
+        - bind-utils
+        - vim
+        - langpacks-en
+        - tzdata
+      state: present
+
+  when: ansible_distribution == "OracleLinux" and ansible_distribution_major_version == "6"
+

@@ -1,0 +1,11 @@
+---
+# tasks file for playbooks/roles/install_chef_oci_prod
+- name: Descargando Script Chef
+  ansible.builtin.get_url:
+    url: '{{ item.url }}'
+    dest: '{{ item.dest }}'
+    mode: '{{ item.mode }}'
+  with_items: "{{ descarga }}"
+
+- name: Executando script
+  shell: "/tmp/chef-client-install.sh -manual"

@@ -1,0 +1,56 @@
+---
+- name: 'Actializando Claves'
+  user:
+    name: '{{ item.username }}'
+    password: '{{ item.contrasena | password_hash("sha512") }}'
+    update_password: 'always'
+#      password_expire_min: 0
+#      password_expire_max: 99999
+  with_items: "{{ users }}"
+
+- name: groupo sshadmin
+  group:
+      name: sshadmin
+      gid: 1005
+      state: present
+- name: groupo socuser
+  group:
+      name: socuser
+      gid: 1611
+      state: present
+- name: Confirura el acceso al Root via ssh
+  lineinfile:
+      path: /etc/ssh/sshd_config
+      line: 'PermitRootLogin yes'
+      backup: yes
+- name: Confirura el acceso al Grupo sshadmin via ssh
+  lineinfile:
+      path: /etc/ssh/sshd_config
+      line: 'AllowGroups sshadmin'
+      backup: yes
+- name: Confirura el en UID_MIN
+  lineinfile:
+      path: /etc/login.defs
+      line: 'UID_MIN                  1010'
+      backup: yes
+- name: Confirura el en UIDMIN
+  lineinfile:
+      path: /etc/login.defs
+      line: 'GID_MIN                  1010'
+      backup: yes
+- name: Confirura el acceso via sudo
+  lineinfile:
+    path: /etc/sudoers
+    line: '{{ item.username }} ALL=(ALL) NOPASSWD: ALL'
+    backup: yes
+    validate: visudo -cf %s
+  with_items: "{{ users }}"
+- name: Agregando grupos a los usuarios
+  ansible.builtin.user:
+    name: '{{ item.username }}'
+    groups: sshadmin
+    append: true        
+  with_items: "{{ users }}"
+- name: "Set password expiration days limit"
+  raw: "passwd -x -1 {{ item.username }}"
+  with_items: "{{ users }}"

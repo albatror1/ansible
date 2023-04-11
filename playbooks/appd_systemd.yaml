@@ -1,0 +1,22 @@
+---
+- hosts: all
+  tasks:
+  - name: Crea el archivo de servicio
+    copy: 
+      dest: /etc/systemd/system/agente_base_appdynamics.service
+      content: |
+        [Unit]
+        Description=agente base appdynamics
+        After=network.target
+        [Service]
+        User=orawl
+        ExecStart=/bin/java -Ddbagent.name=DIRECTV_RG_DATABASE_2 -Dappdynamics.http.proxyHost=proxy-gw-prod-oci.dtvpan.com -Dappdynamics.http.proxyPort=3128 -Xms5120m -Xmx10000m -jar /opt/appdynamics/dbagent_2/db-agent.jar
+        [Install]
+        WantedBy=multi-user.target
+  - name: Reload Systemd
+    systemd:
+      daemon-reload: yes
+  - name: Enable agente_base_appdynamics.service
+    systemd:
+      name: agente_base_appdynamics.service
+      enabled: true

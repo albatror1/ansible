@@ -1,0 +1,25 @@
+---
+- name: Configurando el History
+  copy:
+    dest: "/etc/profile.d/history.sh"
+    content: |
+      HISTSIZE=5000
+      HISTFILESIZE=5000
+      HISTTIMEFORMAT='%Y%m%d %T  '
+      HISTFILE=/root/.bash_hist-$(echo $TRUSTED_USER;exit)
+
+
+
+
+- name : /etc/ssh/sshd_config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    #regexp: '^AcceptEnv='
+    line: AcceptEnv TRUSTED_USER
+
+- name: Reinicia sshd
+  service:
+    name: sshd
+    enabled: yes
+    state: reloaded
+

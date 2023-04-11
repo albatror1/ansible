@@ -1,0 +1,29 @@
+---
+
+
+- name: Preguntar por paquetes a excluir
+  pause:
+    prompt: "¿Qué paquetes quieres excluir? (separados por coma) "
+  register: excluded_packages
+
+
+- name: Actualizar paquetes
+  yum:
+    name: "*"
+    state: latest
+    exclude: "{{ excluded_packages | join(',') }}"
+  register: yum_result
+- name: Mostrar resultado de la actualización
+  debug:
+    var: yum_result
+
+
+#  
+#- name: Preguntar por paquetes a excluir
+#3  pause:
+#    prompt: "¿Qué paquetes quieres excluir? (separados por coma)"
+#  register: excluded_packages
+  
+#- name: Mostrar resultado de la actualización
+#  debug:
+#    var: yum_result

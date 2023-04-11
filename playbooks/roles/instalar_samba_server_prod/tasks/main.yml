@@ -1,0 +1,65 @@
+---
+# tasks file for instalar_samba_server
+- name: "instalar paquetes con Yum"
+  yum:
+    name:
+      - nmap
+      - samba 
+      - samba-client 
+      - samba-common 
+      - samba-winbind 
+      - samba-winbind-clients 
+      - xorg-x11-xauth 
+      - xorg-x11-apps  
+      - authconfig-gtk 
+      - oddjob-mkhomedir 
+      - krb5-workstation
+    state: present
+- name: Configurando Kerberos
+  template: 
+    src: files/krb5.conf
+    dest: /etc/krb5.conf
+- name: Iniciando SAMBA
+  systemd:
+    name: smb
+    state: started
+    enabled: true  
+- name: Crea un directorio para Kerberos
+  file:
+    path: /var/lib/sss/pubconf/krb5.include.d/
+    state: directory
+    mode: '0755'
+
+- name: Configurando Winbind
+  ansible.builtin.shell:     authconfig --disablewins --enablewinbind --disablefingerprint --passalgo sha512 --winbindtemplateshell="/sbin/nologin" --winbindseparator="+" --smbsecurity="ads" --smbrealm="DTVPAN.COM" --smbworkgroup="dtvpan" --smbservers="RGADRDCPRD51755.dtvpan.com" --smbidmaprange="16777216-33554431" --enablewinbindauth --enablemkhomedir --krb5realm="DTVPAN.COM" --disablekrb5realmdns --krb5kdc="RGADRDCPRD51755.dtvpan.com,RGADRDCPRD51756.dtvpan.com" --disablekrb5kdcdns --enablewinbindusedefaultdomain --enablewinbindoffline --nostart --updateall
+
+
+- name: Reiniciando SAMBA
+  systemd:
+    name: smb
+    state: restarted
+    enabled: true  
+
+- name: Reiniciando Winbind
+  systemd:
+    name: winbind 
+    state: restarted
+    enabled: true  
+
+- name: Borrando Cahe antiguos
+  file:
+    path: /var/lib/samba/*
+    state: absent
+- name: Crea un directorio para SAMBA
+  file:
+    path: /var/lib/samba/private
+    state: directory
+    mode: '0755'
+
+- name: Samba privatesecrets.tdb
+  template: 
+    src: files/privatesecrets.tdb
+    dest: /var/lib/samba/privatesecrets.tdb
+
+
+

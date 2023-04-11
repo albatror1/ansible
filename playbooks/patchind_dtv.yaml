@@ -1,0 +1,26 @@
+---
+- name: PATCHIN via role playbook
+  hosts: all
+  become: true
+  pre_tasks:
+    - name: Executando script
+      ansible.builtin.shell: ip addr show | grep "192.168" | head -n 1 | awk '{print $2}' | cut -d "." -f 3 | head -c 1
+      register: result 
+    - debug: 
+        msg: "{{result.stdout}}"
+  roles:
+    - role: firewall_selinux
+    - role: conf_locales
+    - role: history
+    - role: repositorios_dev
+      when: result.stdout == "2"
+    - role: repositorios_prod
+      when: result.stdout == "1"
+    - role: paquetes_minimios
+  post_tasks:
+    - name: "Actualizar Paquetes"
+      yum:
+        name: '*'
+        state: latest
+        update_cache: yes
+        exclude: kernel*

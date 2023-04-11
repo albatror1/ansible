@@ -1,0 +1,48 @@
+---
+# ansible v2.11
+- name: Write facts into a csv file
+  hosts: all
+#  connection: network_cli
+  gather_facts: yes
+#  vars_files:
+#    - vault.yml
+
+  vars:
+    output_path: "./tmp"
+    filename: "device_report_{{ date }}.csv"
+
+  tasks:
+  - name: CSV - Generate output filename
+    set_fact: date="{{lookup('pipe','date +%Y%m%d')}}"
+    run_once: true
+
+#  - name: CSV - Create file and set the header
+#    lineinfile:
+#      dest: "{{ output_path }}/{{ filename }}"
+#      line:
+#        hostname,image,distribicion,vercion,kernel,ram
+#      create: yes
+#      state: present
+
+  - name: CSV - Get IOS devices facts
+    set_fact:
+      csv_tmp: >
+        {{ansible_hostname}},{{ ansible_cmdline.BOOT_IMAGE }},{{ ansible_distribution }}, {{ansible_distribution_major_version}},{{ansible_kernel}},{{ansible_memtotal_mb}}
+#        {{ ansible_net_hostname }},{{ ansible_net_image }},{{ ansible_net_iostype }},{{ ansible_net_model }},{{ ansible_net_serialnum }},{{ ansible_net_system }},{{ ansible_net_version }},{{ ansible_net_filesystems_info['flash:']['spacetotal_kb'] }},{{ ansible_net_filesystems_info['flash:']['spacefree_kb'] }}
+
+  - name: CSV - Write information into .csv file
+    lineinfile:
+      insertafter: EOF
+      dest: "{{ output_path }}/{{ filename }}"
+      line: "{{ csv_tmp }}"
+
+  - name: CSV - Blank lines removal
+    lineinfile:
+      path: "{{ output_path }}/{{ filename }}"
+      state: absent
+      regex: '^\s*$'
+  - name: Download file from Remote Machine to Local ansible-node directory
+    fetch:
+      src: "{{ output_path }}/{{ filename }}"
+      dest: /tmp/
+      flat: yes

@@ -1,0 +1,24 @@
+---
+users:
+  - username: "opc"
+    uid: "1000"
+    contrasena: "S13b3l.Prod"
+  - username: "root"
+    contrasena: "S13b3l.Prod"
+  - username: "socuser"
+    uid: "1611"
+    contrasena: "WPxyr*&5RxXTvaGf"
+  - username: "orarom"
+    uid: "1500"
+    contrasena: "WPxyr*&5RxXTvaGf"
+  - username: "oracleos"
+    uid: "1501"
+    contrasena: "q2=[9B!DMswx123"
+#  - username: "s_rg_prd_platano"
+#    uid: "1501"
+#    contrasena: "WPxyr*&5RxXTvaGf"
+keys:
+  - pub: opc_20210528.pub
+  - pub: opc_automation.pub
+  - pub: opc_rgocitrpr3058.pub
+  - pub: opc_trst549.pub 

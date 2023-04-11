@@ -1,0 +1,125 @@
+---
+repos_ol_6:
+  - nombre : dtv_local_addons
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL6/addons/x86_64/
+    description : dtv_local_ol6_latest
+  - nombre : dtv_local_latest
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL6/latest/x86_64/
+    description : dtv_local_ol6_latest
+  - nombre : dtv_local_oracle
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL6/oracle/x86_64/
+    description : dtv_local_ol6_oracle
+  - nombre : dtv_local_UEK
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL6/UEK/x86_64/
+    description : dtv_local_ol6_UEK
+  - nombre : dtv_local_UEKR3
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL6/UEKR3/x86_64/
+    description : dtv_local_ol6_UEKR3
+  - nombre : dtv_local_UEKR4
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL6/UEKR4/x86_64/
+    description : dtv_local_ol6_UEKR4
+
+
+repos_ol_7:
+  - nombre : dtv_local_ansible_tower-cli
+    baseurl : http://rgyumapmle54032.dtvdev.net/repo/OracleLinux/ansible-tower-cli/x86_64/
+    description : dtv_local_ansible_tower-cli
+  - nombre : dtv_local_ansible_tower-cli-dependencies
+    baseurl : http://rgyumapmle54032.dtvdev.net/repo/OracleLinux/ansible-tower-cli-dependencies/x86_64/
+    description : dtv_local_ansible_tower-cli-dependencies
+
+  - nombre : dtv_local_ol7_addons
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/addons/x86_64/
+    description : dtv_local_ol7_addons
+
+  - nombre : dtv_local_ol7_oci_latest
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/latest/x86_64/
+    description : dtv_local_ol7_oci_latest
+
+  - nombre : dtv_local_ol7_optional
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/optional/x86_64/
+    description : dtv_local_ol7_optional
+
+  - nombre : dtv_local_ol7_security
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/security/x86_64/
+    description : dtv_local_ol7_security
+
+#      - nombre : dtv_local_ol7_kvm_utils
+#        baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/addons/x86_64/
+#        description : dtv_local_ol7_kvm_utils
+
+#      - nombre : dtv_local_ol7_addons
+#        baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/addons/x86_64/
+#        description : dtv_local_ol7_addons
+
+  - nombre : dtv_local_ol7_developer_UEKR4
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/UEKR4/x86_64/
+    description : dtv_local_ol7_UEKR4
+
+  - nombre : dtv_local_ol7_optional_UEKR5
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/UEKR5/x86_64/
+    description : dtv_local_ol7_UEKR5
+
+  - nombre : dtv_local_ol7_UEKR6
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL7/UEKR6/x86_64/
+    description : dtv_local_ol7_UEKR6
+
+repos_rh_79:
+  - nombre : dtv_local_RH7E-RPMS
+    baseurl : http://dtv-repo-rh-7.dtvpan.com/yum/RH7/rhel-7-server-rpms/
+    description : Red Hat Enterprise Linux 7 Server (RPMs)
+#favio copete!!! para abrir repositorio!!!
+repos_ol_8:
+
+  - nombre : dtv_ol8_addons
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/addons/x86_64/
+    description : Directv Oracle Linux 8 addons ($basearch)
+
+  - nombre : dtv_ol8_appstream
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/appstream/x86_64/
+    description : Directv Oracle Linux 8 dtv_ol8_appstream ($basearch)
+
+  - nombre : dtv_ol8_baseos
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/baseos/latest/x86_64/
+    description : Directv Oracle Linux 8 Application Stream ($basearch)
+
+  - nombre : dtv_ol8_developer_EPEL_modular
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/developer/EPEL/modular/x86_64/
+    description : Directv Oracle Linux 8 Application Stream ($basearch)
+
+  - nombre : dtv_ol8_automation2
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/automation2/x86_64/
+    description : Directv Oracle Linux 8 Automation 2 ($basearch)
+
+  - nombre : dtv_ol8_automation
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/automation/x86_64/
+    description : Directv Oracle Linux 8 Automation ($basearch)
+
+  - nombre : dtv_ol8_KVM
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/kvm/appstream/x86_64/
+    description : Directv Oracle Linux 8 KVM ($basearch)
+
+  - nombre : dtv_ol8_UEK6
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/UEKR6/RDMA/x86_64/
+    description : Directv Oracle Linux 8 UEK6 ($basearch)
+
+  - nombre : dtv_ol8_UEK7
+    baseurl : http://rgyumapmle54032.dtvdev.net/yum/OracleLinux/OL8/UEKR7/RDMA/x86_64/
+    description : Directv Oracle Linux 8 UEK7 ($basearch)
+
+
+
+repos_rh_8:
+  - nombre : dtv_RH8-BASE
+    baseurl : http://dtv-repo-rh-8.dtvpan.com/yum/RH8-BASE/
+    description : RH8-BASE
+  - nombre : dtv_RH8-APPS
+    baseurl : http://dtv-repo-rh-8.dtvpan.com/yum/RH8-APPS/
+    description : dtv_RH8-APPS
+  - nombre : dtv_RH8-SUPP
+    baseurl : http://dtv-repo-rh-8.dtvpan.com/yum/RH8-SUPP/
+    description : dtv_RH8-SUPP
+  - nombre : dtv_RH8-HA
+    baseurl : http://dtv-repo-rh-8.dtvpan.com/yum/RH8-HA/
+    description : dtv_RH8-HA
+

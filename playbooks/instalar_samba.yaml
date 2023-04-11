@@ -1,0 +1,13 @@
+---
+- name: Instalar y configurar SAMBA y NTP
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - debug:
+        msg: 'Instalar y configurar SAMBA y NTP'
+
+  roles:
+    - repositorios_oci
+    - configurar_ntp_prod
+    - instalar_samba_server_prod

@@ -1,0 +1,48 @@
+---
+- name: Modifica el Archivo smb-shares.conf
+  blockinfile:
+    marker: "# {mark} BLOQUE CREADO POR ANSIBLE  {{ item.share }}"
+    path: /shares/conf/smb-shares.conf
+    block: |
+      [{{ item.share }}]
+        comment = Share {{ item.share }}
+        path = /shares/groups/{{ item.share }}
+        public = {{ item.public }}
+        browseable = {{ item.browseable }}
+        read only = {{ item.read_only }}
+        guest ok = {{ item.guest_ok }}
+        create mask = {{ item.create_mask }}
+        directory mask = {{ item.directory_mask }}
+        force create mode = {{ item.create_mask }}
+        force directory mode = {{ item.directory_mask }}
+        force user = nobody
+        force group = "DTVPAN+domain users"
+        valid users = {{ item.write_list }},{{ item.read_list }}
+        write list = {{ item.write_list }}
+        read list = {{ item.read_list }}
+
+- name: Creates directory
+  file:
+    path: "/shares/groups/'{{ item.share }}'"
+    state: directory
+    owner: nobody
+    group: "DTVPAN+domain users"
+    mode: 4777
+
+    with_items: "{{ shares }}"
+
+- name: Enable samba service
+  systemd:
+    name: smb.service
+    enabled: true
+- name: Enable winbind service
+  systemd:
+    name: winbind.service
+    enabled: true
+- name: Reload service smb, in all cases
+  systemd:
+    name: smb.service
+    state: reloaded
+- name: Reload service winbind, in all cases
+  systemd:
+    name: winbind.service

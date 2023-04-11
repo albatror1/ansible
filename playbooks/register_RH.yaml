@@ -1,0 +1,14 @@
+---
+- name: Aplica Remediaciones
+  hosts: all
+  become: true
+  tasks:
+    - name: Register as user (ingenieriaplataformas@directvla.com.ar)  and auto-subscribe to available content.
+      redhat_subscription:
+        state: present
+        username: ingenieriaplataformas@directvla.com.ar
+        password: 1ng.pl4.21#
+        autosubscribe: true
+      environment:
+        - http_proxy: http://proxy-gw-prod-oci.dtvpan.com:3128
+        - https_proxy: http://proxy-gw-prod-oci.dtvpan.com:3128

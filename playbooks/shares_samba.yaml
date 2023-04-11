@@ -1,0 +1,12 @@
+---
+- name: Aplicacion de repositorios de OCI
+  hosts: all
+  become: true
+
+  pre_tasks:
+    - debug:
+        msg: 'Creando shares de SAMBA.'
+
+  roles:
+    - crear_recurso_samba
+    
