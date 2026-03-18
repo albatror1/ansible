@@ -1,0 +1,50 @@
+plugin: oracle.oci.oci
+
+# DB Hosts
+fetch_db_hosts: True
+
+# Compute Hosts (bool type)
+fetch_compute_hosts: True
+
+
+hostname_format_preferences:
+  - "display_name"
+compose:
+  ansible_host: "private_ip"
+  ansible_host_id: "id"
+
+# hosts: true
+#hostname_format_preferences:
+#  - "id"
+#  - "private_ip"
+#  - "public_ip"
+
+enable_parallel_processing: yes
+
+#regions:
+#   - ca-toronto-1
+#  - us-phoenix-1
+#  - us-ashburn-1
+
+#compartments:
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaadwrszhkc2jv4c7iwcljger4pp4ch2aikwmrizypaw2cwalda3ihq
+#    fetch_hosts_from_subcompartments: true
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaara3azw3lzo5ewrpa3hg7skzjjlsgfyhoenz45bb5lggap33pvafq
+#    fetch_hosts_from_subcompartments: true
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaarrzvweb24fktqggy74yzw6d2m3uvznm5q4w7f4hojtugelchx36q
+#    fetch_hosts_from_subcompartments: true
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaasckczssycr4ejo37daot4hg6sxplbk4sqvjya46i2oeulrn6h5qq
+#    fetch_hosts_from_subcompartments: true
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaaemhj3lxej2x5dxigwsflxedjtydr5lx6crvnwrt5luluvvx4r6ea
+#    fetch_hosts_from_subcompartments: true
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaa6bq4xynnfbqw2bod6vzrzwanenly257ni2xb5aoqwu5s2ioogvnq
+#    fetch_hosts_from_subcompartments: true
+#  - compartment_ocid: ocid1.compartment.oc1..aaaaaaaaiblrt6bnrrv7ujb33446o6e24w7umoxy5qf5f2urrmxlgs6qfa5q
+#    fetch_hosts_from_subcompartments: true
+
+#groups:
+# #  <group_name>: "'<tag_value>' == freeform_tags.<tag_key>"
+#   OracleLinux8: "'Oracle_Linux_8' == Meridional-Tags-General.SO"
+#   OracleLinux9: "'Oracle_Linux_9' == Meridional-Tags-General.SO"
+#   Windows2019: "'Windows_server_2019' == Meridional-Tags-General.SO"
+   Windows2012: "'Windows_server_2012' == Meridional-Tags-General.SO"
