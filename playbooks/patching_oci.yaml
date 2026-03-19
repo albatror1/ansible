@@ -13,7 +13,7 @@
 #    - firewall_selinux
 #    - conf_locales
 #    - history
-    - repositorios_oci
+#    - repositorios_oci
     - paquetes_minimios
 
   post_tasks:
