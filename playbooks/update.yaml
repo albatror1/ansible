@@ -1,0 +1,37 @@
+---
+- name: Actualizar paquetes instalados segun familia del sistema
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Mostrar sistema detectado
+      ansible.builtin.debug:
+        msg:
+          - "Distribucion: {{ ansible_distribution }}"
+          - "Version: {{ ansible_distribution_version }}"
+          - "Familia: {{ ansible_os_family }}"
+          - "Package manager: {{ ansible_pkg_mgr }}"
+
+    - name: Actualizar cache APT en sistemas Debian/Ubuntu
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+
+    - name: Actualizar todos los paquetes en sistemas Debian/Ubuntu
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "Debian"
+
+    - name: Actualizar todos los paquetes en sistemas RedHat/Oracle Linux/Rocky/AlmaLinux/CentOS
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "RedHat"
+
+    - name: Avisar si la familia no esta contemplada
+      ansible.builtin.debug:
+        msg: "La familia {{ ansible_os_family }} no esta contemplada en este playbook."
+      when: ansible_os_family not in ["Debian", "RedHat"]
